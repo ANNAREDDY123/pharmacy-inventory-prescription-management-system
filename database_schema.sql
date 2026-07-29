@@ -1,0 +1,37 @@
+CREATE TABLE users(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+username VARCHAR(100) NOT NULL,
+email VARCHAR(100) UNIQUE NOT NULL,
+password VARCHAR(255) NOT NULL,
+role VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE medicines(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+medicine_name VARCHAR(100) NOT NULL,
+batch_number VARCHAR(50) UNIQUE NOT NULL,
+manufacturer VARCHAR(100) NOT NULL,
+expiry_date DATE NOT NULL,
+unit_price FLOAT NOT NULL,
+stock_quantity INTEGER NOT NULL
+);
+
+CREATE TABLE prescriptions(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+customer_id INTEGER NOT NULL,
+doctor_name VARCHAR(100) NOT NULL,
+prescription_date DATE NOT NULL,
+status VARCHAR(30) NOT NULL,
+FOREIGN KEY(customer_id) REFERENCES users(id)
+);
+
+CREATE TABLE orders(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+prescription_id INTEGER NOT NULL,
+medicine_id INTEGER NOT NULL,
+quantity INTEGER NOT NULL,
+total_amount FLOAT NOT NULL,
+payment_status VARCHAR(30) NOT NULL,
+FOREIGN KEY(prescription_id) REFERENCES prescriptions(id),
+FOREIGN KEY(medicine_id) REFERENCES medicines(id)
+);
